@@ -153,16 +153,52 @@ class SinglyLinkedList {
     this.length++;
     return true;
   }
+
+  /////////////////////////////////////// pseudo code for remove method ///////////////////////////////////////
+  // 1. this methoed should accepts an index
+  // 2. return null if index is less than 0 or equal or greater than length
+  // 3. if index is equal to length-1 than use pop
+  // 4. if index is equal to 0 than use shift
+  // 5. else access the index -1 node using get method
+  // 6. update the next property of found node to be the next of it's own next
+  // 7. decrement the length by 1
+  // 8. return the value of removed node
+  remove(index) {
+    if (index < 0 || index >= this.length) return null;
+    if (index === this.length - 1) return this.pop();
+    if (index === 0) return this.shift();
+    const prevNode = this.get(index - 1);
+    const targetNode = prevNode.next;
+    prevNode.next = targetNode.next;
+    this.length--;
+    return targetNode;
+  }
+  /////////////////////////////////////// pseudo code for reverse method ///////////////////////////////////////
+  // 1. swap the head and tail of the list
+  // 2. create a variable called nextNode
+  // 3. create a variable called prevNode
+  // 4. create a variable called node and initialize it as head of the list
+  // 5. loop over the list
+  // 6. set the nextNode to be the next property of node
+  // 7. update the next property of the node to be whatever prevNode is
+  // 8. set prevNode to be the value of node
+  // 9. set node to be the value of nextNode
+  reverse() {
+    let node = this.head,
+      prevNode = null,
+      nextNode = node.next;
+    this.tail = [this.head, (this.head = this.tail)][0];
+    while (nextNode) {
+      nextNode = node.next;
+      node.next = prevNode;
+      prevNode = node;
+      node = nextNode;
+    }
+    return this;
+  }
 }
 
 const list = new SinglyLinkedList();
-list.push("hello");
-list.push("there");
-list.push("!");
-// list.unshift(1);
-// list.shift();
-// list.shift();
-list.set(0, "Hellow world");
-console.log(list);
-console.log(list.insert(1, "!!!!!"));
-console.log(list);
+list.push(1);
+list.push(2);
+list.push(3);
